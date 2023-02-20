@@ -1,29 +1,14 @@
-import React from "react"
-import { GetServerSideProps } from "next"
-import ReactMarkdown from "react-markdown"
-import Layout from "../../components/Layout"
-import { PostProps } from "../../components/Post"
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = {
-    id: "1",
-    title: "Prisma is the perfect ORM for Next.js",
-    content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-    published: false,
-    author: {
-      name: "Nikolas Burk",
-      email: "burk@prisma.io",
-    },
-  }
-  return {
-    props: post,
-  }
-}
+import React from "react";
+import { GetServerSideProps } from "next";
+import ReactMarkdown from "react-markdown";
+import Layout from "../../components/Layout";
+import { PostProps } from "../../components/Post";
+import prisma from "../../lib/prisma";
 
 const Post: React.FC<PostProps> = (props) => {
-  let title = props.title
+  let title = props.title;
   if (!props.published) {
-    title = `${title} (Draft)`
+    title = `${title} (Draft)`;
   }
 
   return (
@@ -55,7 +40,24 @@ const Post: React.FC<PostProps> = (props) => {
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;
+
+// pages/p/[id].tsx
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: String(params?.id),
+    },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  });
+  return {
+    props: post,
+  };
+};
