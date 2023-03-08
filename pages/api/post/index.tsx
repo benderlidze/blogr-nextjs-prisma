@@ -1,5 +1,3 @@
-// pages/api/post/index.ts
-
 import { getSession } from "next-auth/react";
 import prisma from "@lib/prisma";
 
