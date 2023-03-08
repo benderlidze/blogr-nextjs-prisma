@@ -8,4 +8,7 @@ export const PostBody = styled.div`
   background-color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  border: 1px solid #eaeaea;
+  margin-bottom: 1rem;
+  
 `;

@@ -31,9 +31,9 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   return (
     <S.PostBody onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
       <h2>{post.title}</h2>
-      <small>By {authorName}</small>
-      <ReactMarkdown children={post.content} />
-
+      <div>By {authorName}</div>
+      {/* <ReactMarkdown children={post.content} /> */}
+      {post.content}
       <button onClick={handleDeleteClick}>Delete</button>
     </S.PostBody>
   );
